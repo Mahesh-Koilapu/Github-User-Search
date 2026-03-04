@@ -92,3 +92,27 @@ Only logged-in users can access the dashboard. Unauthenticated users are redirec
 - Fetches user profile (name, avatar, bio, location, followers, following, public repos)
 - Fetches top 5 repositories sorted by stars
 
+<!-- This is my Workflow
+
+
+User opens app
+        ↓
+Login Page (Login.jsx)
+        ↓
+Frontend sends username/password
+        ↓
+Backend verifies with SQLite database
+        ↓
+Backend returns JWT token
+        ↓
+Frontend saves token in localStorage
+        ↓
+ProtectedRoute checks token
+        ↓
+Dashboard.jsx opens
+        ↓
+User searches GitHub username
+        ↓
+GitHub API returns profile + repositories
+        ↓
+Dashboard displays data -->
