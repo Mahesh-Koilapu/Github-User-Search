@@ -7,6 +7,7 @@
  */
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { loginUser, registerUser } from '../services/authApi';
 
@@ -17,6 +18,7 @@ import { loginUser, registerUser } from '../services/authApi';
  * @returns {JSX} - Login/Register form
  */
 const Login = () => {
+  const navigate = useNavigate();
   // Toggle between login and register mode
   const [isRegister, setIsRegister] = useState(false);
   
@@ -71,7 +73,7 @@ const Login = () => {
         if (data.token) {
           // Save token and redirect to dashboard
           localStorage.setItem('token', data.token);
-          window.location.href = '/';
+          navigate('/');
         } else {
           setMessage(data.message || 'Invalid credentials');
           setIsError(true);

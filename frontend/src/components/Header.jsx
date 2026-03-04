@@ -6,6 +6,7 @@
  * Includes dark/light mode toggle button.
  */
 
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
 /**
@@ -14,6 +15,7 @@ import { useTheme } from '../context/ThemeContext';
  * @returns {JSX} - Header with title and action buttons
  */
 const Header = () => {
+  const navigate = useNavigate();
   // Get authentication token from localStorage
   const token = localStorage.getItem('token');
   
@@ -26,7 +28,7 @@ const Header = () => {
    */
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   return (

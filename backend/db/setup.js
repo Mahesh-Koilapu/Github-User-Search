@@ -5,12 +5,6 @@ const path = require('path');
 // Use absolute path based on this file's location
 const dbPath = path.resolve(__dirname, 'database.db');
 
-// Always delete existing database to start fresh (prevents corrupted file issues)
-if (fs.existsSync(dbPath)) {
-  console.log('Removing existing database file...');
-  fs.unlinkSync(dbPath);
-}
-
 // Ensure db directory exists
 const dbDir = path.dirname(dbPath);
 if (!fs.existsSync(dbDir)) {

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
+import { fetchGitHubUser, fetchRepos } from '../services/githubApi';
 
 const Dashboard = () => {
   const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const Dashboard = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { isDarkMode } = useTheme();
 
-  const searchForUser = async () => {
+  const searchForUser = useCallback(async () => {
     if (!username.trim()) {
       setErrorMessage('Please enter a GitHub username');
       return;
@@ -20,20 +21,9 @@ const Dashboard = () => {
     setErrorMessage('');
 
     try {
-      const headers = {
-        'Accept': 'application/vnd.github.v3+json'
-      };
+      const user = await fetchGitHubUser(username);
 
-      // Use token from environment variable if available
-      const token = import.meta.env.VITE_GITHUB_TOKEN;
-      if (token) {
-        headers['Authorization'] = `token ${token}`;
-      }
-
-      const userResponse = await fetch(`https://api.github.com/users/${username}`, { headers });
-      const user = await userResponse.json();
-
-      if (userResponse.status === 404) {
+      if (user.message === 'Not Found') {
         setErrorMessage('User not found');
         setUserData(null);
         setRepos([]);
@@ -49,11 +39,7 @@ const Dashboard = () => {
         return;
       }
 
-      const reposResponse = await fetch(
-        `https://api.github.com/users/${username}/repos?sort=stars&per_page=5`,
-        { headers }
-      );
-      const reposData = await reposResponse.json();
+      const reposData = await fetchRepos(username);
 
       setUserData(user);
       setRepos(Array.isArray(reposData) ? reposData : []);
@@ -63,7 +49,26 @@ const Dashboard = () => {
     }
 
     setIsLoading(false);
-  };
+  }, [username]);
+
+  // Debounced search logic
+  useEffect(() => {
+    // Don't search if username is empty
+    if (!username.trim()) {
+      setUserData(null);
+      setRepos([]);
+      setErrorMessage('');
+      return;
+    }
+
+    // Set a timeout to delay the search
+    const delayDebounceFn = setTimeout(() => {
+      searchForUser();
+    }, 500); // 500ms delay
+
+    // Cleanup timeout on every keystroke
+    return () => clearTimeout(delayDebounceFn);
+  }, [username, searchForUser]);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
