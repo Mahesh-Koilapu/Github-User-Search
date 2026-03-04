@@ -1,0 +1,592 @@
+/**
+ * Global Styles for GitHub Search Application
+ * 
+ * This file contains all CSS styles for the application.
+ * It includes both light and dark mode styling.
+ * 
+ * Table of Contents:
+ * 1. Global Styles
+ * 2. Header Styles
+ * 3. Auth Container Styles
+ * 4. Dashboard Styles
+ * 5. Dark Mode Styles
+ * 6. Responsive Styles
+ */
+
+/* ============================================
+   1. GLOBAL STYLES
+   ============================================ */
+
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base body styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  color: #24292e;
+}
+
+/* Root element */
+#root {
+  min-height: 100vh;
+}
+
+/* ============================================
+   2. HEADER STYLES
+   ============================================ */
+
+.header {
+  background-color: #24292e;
+  padding: 16px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  color: white;
+  font-size: 24px;
+}
+
+/* Header action buttons container */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #586069;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #6a737d;
+}
+
+/* ============================================
+   3. AUTH CONTAINER STYLES
+   ============================================ */
+
+/* Center the auth card on screen */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+/* Login/Register card */
+.auth-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card h2 {
+  margin-bottom: 30px;
+  color: #24292e;
+  font-size: 28px;
+}
+
+/* Form styles */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #0366d6;
+}
+
+.auth-card input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Submit button */
+.auth-card button[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 24px;
+  background-color: #0366d6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-card button:hover:not(:disabled) {
+  background-color: #0256b9;
+}
+
+.auth-card button:disabled {
+  background-color: #6a737d;
+  cursor: not-allowed;
+}
+
+/* Message styles */
+.error-message {
+  color: #dc3545;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f8d7da;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.success-message {
+  color: #28a745;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #d4edda;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Toggle text */
+.toggle-text {
+  margin-top: 20px;
+  color: #586069;
+  font-size: 14px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #0366d6;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0 5px;
+}
+
+.toggle-btn:hover:not(:disabled) {
+  color: #0256b9;
+}
+
+/* ============================================
+   4. DASHBOARD STYLES
+   ============================================ */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.dashboard-container h2 {
+  margin-bottom: 20px;
+  color: #24292e;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  flex: 1;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #0366d6;
+}
+
+.search-box button {
+  padding: 12px 24px;
+  background-color: #0366d6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-box button:disabled {
+  background-color: #6a737d;
+}
+
+/* Helper text */
+.debounce-hint {
+  color: #586069;
+  font-size: 14px;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+/* Loading and error states */
+.loading {
+  color: #586069;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 20px 0;
+}
+
+/* User profile card */
+.user-profile {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #e1e4e8;
+  margin-bottom: 15px;
+}
+
+.user-profile h3 {
+  color: #24292e;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bio {
+  color: #586069;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.stats p {
+  color: #586069;
+  font-size: 14px;
+}
+
+/* Repositories section */
+.repositories {
+  margin-top: 30px;
+}
+
+.repositories h3 {
+  color: #24292e;
+  margin-bottom: 20px;
+}
+
+/* Repository card */
+.repo-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+.repo-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.repo-card a {
+  color: #0366d6;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.repo-card a:hover {
+  text-decoration: underline;
+}
+
+.repo-card p {
+  color: #586069;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.repo-stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.repo-stats span {
+  color: #586069;
+  font-size: 14px;
+}
+
+/* ============================================
+   5. DARK MODE STYLES
+   ============================================ */
+
+/* Dark mode general styles */
+.dark-mode {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+
+/* Header dark mode */
+.dark-mode .header {
+  background-color: #161b22;
+  border-bottom: 1px solid #30363d;
+}
+
+.dark-mode .header h1 {
+  color: #f0f6fc;
+}
+
+/* Theme toggle dark mode */
+.dark-mode .theme-toggle {
+  background-color: #21262d;
+  border: 1px solid #30363d;
+}
+
+.dark-mode .theme-toggle:hover {
+  background-color: #30363d;
+}
+
+/* Auth container dark mode */
+.dark-mode .auth-container {
+  background-color: #0d1117;
+}
+
+.dark-mode .auth-card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+}
+
+.dark-mode .auth-card h2 {
+  color: #f0f6fc;
+}
+
+.dark-mode .auth-card input {
+  background-color: #0d1117;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+.dark-mode .auth-card input:focus {
+  border-color: #58a6ff;
+}
+
+.dark-mode .auth-card input::placeholder {
+  color: #8b949e;
+}
+
+.dark-mode .auth-card button[type="submit"] {
+  background-color: #238636;
+}
+
+.dark-mode .auth-card button:hover:not(:disabled) {
+  background-color: #2ea043;
+}
+
+.dark-mode .error-message {
+  color: #f85149;
+  background-color: rgba(248, 81, 73, 0.1);
+}
+
+.dark-mode .success-message {
+  color: #3fb950;
+  background-color: rgba(63, 185, 80, 0.1);
+}
+
+.dark-mode .toggle-text {
+  color: #8b949e;
+}
+
+/* Dashboard dark mode */
+.dark-mode .dashboard-container {
+  background-color: #0d1117;
+}
+
+.dark-mode .dashboard-container h2 {
+  color: #f0f6fc;
+}
+
+.dark-mode .search-box input {
+  background-color: #0d1117;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+.dark-mode .search-box input:focus {
+  border-color: #58a6ff;
+}
+
+.dark-mode .search-box input::placeholder {
+  color: #8b949e;
+}
+
+.dark-mode .search-box button {
+  background-color: #238636;
+}
+
+.dark-mode .search-box button:hover:not(:disabled) {
+  background-color: #2ea043;
+}
+
+.dark-mode .debounce-hint {
+  color: #8b949e;
+}
+
+.dark-mode .loading {
+  color: #8b949e;
+}
+
+.dark-mode .error {
+  color: #f85149;
+  background-color: rgba(248, 81, 73, 0.1);
+}
+
+/* User profile dark mode */
+.dark-mode .user-profile {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+}
+
+.dark-mode .user-profile h3 {
+  color: #f0f6fc;
+}
+
+.dark-mode .user-profile .bio,
+.dark-mode .user-profile .stats p,
+.dark-mode .user-profile p {
+  color: #8b949e;
+}
+
+/* Repositories dark mode */
+.dark-mode .repositories h3 {
+  color: #f0f6fc;
+}
+
+.dark-mode .repo-card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+}
+
+.dark-mode .repo-card a {
+  color: #58a6ff;
+}
+
+.dark-mode .repo-card p,
+.dark-mode .repo-stats span {
+  color: #8b949e;
+}
+
+/* ============================================
+   6. RESPONSIVE STYLES
+   ============================================ */
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .search-box {
+    flex-direction: column;
+  }
+  
+  .search-box input {
+    max-width: 100%;
+  }
+  
+  .search-box button {
+    width: 100%;
+  }
+  
+  .stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .repo-stats {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
