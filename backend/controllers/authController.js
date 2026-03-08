@@ -1,23 +1,17 @@
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/jwt');
-const db = require('../db/setup');
+const db = require('../db/setup'); 
+// handle user registration and login logic.
 
-// Register a new user
 const register = async (req, res) => {
   const { username, password } = req.body;
-
-  // Validate input
   if (!username || !password) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
   try {
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert user into database
     const query = `INSERT INTO users (username, password) VALUES (?, ?)`;
-    
     db.run(query, [username, hashedPassword], function (err) {
       if (err) {
         console.error('Registration error:', err.message);
@@ -36,11 +30,9 @@ const register = async (req, res) => {
 const login = (req, res) => {
   const { username, password } = req.body;
 
-  // Validate input
   if (!username || !password) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
-
   // Find user in database
   const query = `SELECT * FROM users WHERE username = ?`;
 
@@ -53,15 +45,11 @@ const login = (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Generate token
     const token = generateToken(user);
     res.json({ token });
   });

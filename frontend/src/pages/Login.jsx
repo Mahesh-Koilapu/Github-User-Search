@@ -1,49 +1,24 @@
-/**
- * Login Page Component
- * 
- * This page handles both user login and registration.
- * Users can toggle between login and register forms.
- * Uses theme context for dark/light mode support.
- */
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { loginUser, registerUser } from '../services/authApi';
 
-/**
- * Login page component
- * Handles user authentication (login and registration)
- * 
- * @returns {JSX} - Login/Register form
- */
+
 const Login = () => {
   const navigate = useNavigate();
-  // Toggle between login and register mode
+
   const [isRegister, setIsRegister] = useState(false);
-  
-  // Form input states
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
-  // Feedback message states
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Get theme for dark mode support
   const { isDarkMode } = useTheme();
-
-  /**
-   * Handle form submission
-   * Calls login or register API based on current mode
-   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage('');
     setIsError(false);
 
-    // Validate inputs
     if (!username.trim() || !password.trim()) {
       setMessage('Please fill in all fields');
       setIsError(true);
@@ -54,7 +29,7 @@ const Login = () => {
       setIsLoading(true);
 
       if (isRegister) {
-        // Register new user
+     
         const data = await registerUser({ username, password });
         
         if (data.message === 'User registered successfully') {
@@ -67,11 +42,11 @@ const Login = () => {
           setIsError(true);
         }
       } else {
-        // Login existing user
+        
         const data = await loginUser({ username, password });
 
         if (data.token) {
-          // Save token and redirect to dashboard
+         
           localStorage.setItem('token', data.token);
           navigate('/');
         } else {
@@ -87,10 +62,7 @@ const Login = () => {
     }
   };
 
-  /**
-   * Toggle between login and register mode
-   * Clears form and messages when switching
-   */
+  
   const toggleMode = () => {
     setIsRegister(!isRegister);
     setMessage('');
@@ -102,12 +74,12 @@ const Login = () => {
   return (
     <div className={`auth-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="auth-card">
-        {/* Page title */}
+        
         <h2>{isRegister ? 'Register' : 'Login'}</h2>
         
-        {/* Authentication form */}
+        
         <form onSubmit={handleSubmit}>
-          {/* Username input */}
+          
           <div className="form-group">
             <input 
               type="text" 
@@ -118,7 +90,7 @@ const Login = () => {
             />
           </div>
           
-          {/* Password input */}
+         
           <div className="form-group">
             <input 
               type="password" 
@@ -129,20 +101,20 @@ const Login = () => {
             />
           </div>
           
-          {/* Submit button */}
+         
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Please wait...' : (isRegister ? 'Register' : 'Login')}
           </button>
         </form>
 
-        {/* Success or error message */}
+      
         {message && (
           <p className={isError ? 'error-message' : 'success-message'}>
             {message}
           </p>
         )}
 
-        {/* Toggle between login and register */}
+        
         <p className="toggle-text">
           {isRegister ? 'Already have an account?' : "Don't have an account?"}
           <button 

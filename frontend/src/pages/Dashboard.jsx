@@ -1,80 +1,76 @@
-import { useState, useEffect, useCallback } from 'react';
-import Header from '../components/Header';
-import { useTheme } from '../context/ThemeContext';
-import { fetchGitHubUser, fetchRepos } from '../services/githubApi';
+import { useState, useEffect, useCallback } from 'react'
+import Header from '../components/Header'
+import { useTheme } from '../context/ThemeContext'
+import { fetchGitHubUser, fetchRepos } from '../services/githubApi'
 
 const Dashboard = () => {
-  const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [repos, setRepos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const { isDarkMode } = useTheme();
+  const [username, setUsername] = useState('')
+  const [userData, setUserData] = useState(null)
+  const [repos, setRepos] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const { isDarkMode } = useTheme()
 
   const searchForUser = useCallback(async () => {
     if (!username.trim()) {
-      setErrorMessage('Please enter a GitHub username');
-      return;
+      setErrorMessage('Please enter a GitHub username')
+      return
     }
 
-    setIsLoading(true);
-    setErrorMessage('');
+    setIsLoading(true)
+    setErrorMessage('')
 
     try {
-      const user = await fetchGitHubUser(username);
+      const user = await fetchGitHubUser(username)
 
       if (user.message === 'Not Found') {
-        setErrorMessage('User not found');
-        setUserData(null);
-        setRepos([]);
-        setIsLoading(false);
-        return;
+        setErrorMessage('User not found')
+        setUserData(null)
+        setRepos([])
+        setIsLoading(false)
+        return
       }
 
       if (user.message) {
-        setErrorMessage(user.message);
-        setUserData(null);
-        setRepos([]);
-        setIsLoading(false);
-        return;
+        setErrorMessage(user.message)
+        setUserData(null)
+        setRepos([])
+        setIsLoading(false)
+        return
       }
 
-      const reposData = await fetchRepos(username);
+      const reposData = await fetchRepos(username)
 
-      setUserData(user);
-      setRepos(Array.isArray(reposData) ? reposData : []);
+      setUserData(user)
+      setRepos(Array.isArray(reposData) ? reposData : [])
     } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('Something went wrong. Please try again.');
+      console.error('Error:', error)
+      setErrorMessage('Something went wrong. Please try again.')
     }
 
-    setIsLoading(false);
-  }, [username]);
+    setIsLoading(false)
+  }, [username])
 
-  // Debounced search logic
   useEffect(() => {
-    // Don't search if username is empty
     if (!username.trim()) {
-      setUserData(null);
-      setRepos([]);
-      setErrorMessage('');
-      return;
+      setUserData(null)
+      setRepos([])
+      setErrorMessage('')
+      return
     }
 
-    // Set a timeout to delay the search
     const delayDebounceFn = setTimeout(() => {
-      searchForUser();
-    }, 500); // 500ms delay
+      searchForUser()
+    }, 500)
 
-    // Cleanup timeout on every keystroke
-    return () => clearTimeout(delayDebounceFn);
-  }, [username, searchForUser]);
+    return () => clearTimeout(delayDebounceFn)
+  }, [username, searchForUser])
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      searchForUser();
+      searchForUser()
     }
-  };
+  }
 
   return (
     <div className={isDarkMode ? 'dark-mode' : ''}>
@@ -132,8 +128,7 @@ const Dashboard = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
-
+export default Dashboard

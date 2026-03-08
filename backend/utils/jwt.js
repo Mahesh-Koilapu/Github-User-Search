@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken');
-
-// Secret key for JWT signing (in production, use environment variable)
 const SECRET_KEY = 'my_secret_key_change_this_in_production';
 
-// Generate JWT token for a user
 const generateToken = (user) => {
   return jwt.sign(
     { id: user.id, username: user.username },
