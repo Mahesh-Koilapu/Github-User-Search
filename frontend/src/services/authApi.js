@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = 'http://github-user-search-msii.onrender.com/api/auth';
 
 export const loginUser = async (credentials) => {
   const response = await fetch(`${API_URL}/login`, {
