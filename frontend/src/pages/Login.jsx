@@ -55,7 +55,7 @@ const Login = () => {
         }
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage(error.message || 'Something went wrong. Please try again.');
       setIsError(true);
     } finally {
       setIsLoading(false);

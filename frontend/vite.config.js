@@ -9,7 +9,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'http://github-user-search-msii.onrender.com',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       }
     }
