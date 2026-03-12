@@ -393,6 +393,56 @@ body {
   font-size: 14px;
 }
 
+/* Search Results Styles */
+.search-results {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.search-results h3 {
+  margin-bottom: 15px;
+  color: #24292e;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 6px;
+}
+
+.user-item:hover {
+  background-color: #f6f8fa;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-item .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 1px solid #e1e4e8;
+}
+
+.user-item span {
+  font-weight: 600;
+  color: #0366d6;
+}
+
 /* ============================================
    5. DARK MODE STYLES
    ============================================ */
@@ -515,6 +565,28 @@ body {
 .dark-mode .error {
   color: #f85149;
   background-color: rgba(248, 81, 73, 0.1);
+}
+
+/* Search results dark mode */
+.dark-mode .search-results {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+}
+
+.dark-mode .search-results h3 {
+  color: #f0f6fc;
+}
+
+.dark-mode .user-item {
+  border-bottom-color: #30363d;
+}
+
+.dark-mode .user-item:hover {
+  background-color: #21262d;
+}
+
+.dark-mode .user-item span {
+  color: #58a6ff;
 }
 
 /* User profile dark mode */

@@ -15,6 +15,24 @@ const getHeaders = () => {
   return headers;
 };
 
+export const searchUsers = async (query) => {
+  try {
+    const response = await fetch(`${GITHUB_API_URL}/search/users?q=${query}&per_page=10`, {
+      headers: getHeaders()
+    });
+
+    if (!response.ok) {
+      return { items: [] };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error searching users:', error);
+    return { items: [] };
+  }
+};
+
+
 export const fetchGitHubUser = async (username) => {
   try {
     const response = await fetch(`${GITHUB_API_URL}/users/${username}`, {
@@ -40,7 +58,7 @@ export const fetchRepos = async (username) => {
       { headers: getHeaders() }
     );
     
-  
+    
     if (!response.ok) {
       return [];
     }

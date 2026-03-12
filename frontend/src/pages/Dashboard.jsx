@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
 import Header from '../components/Header'
 import { useTheme } from '../context/ThemeContext'
-import { fetchGitHubUser, fetchRepos } from '../services/githubApi'
+import { fetchGitHubUser, fetchRepos, searchUsers } from '../services/githubApi'
 
 const Dashboard = () => {
   const [username, setUsername] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [userData, setUserData] = useState(null)
   const [repos, setRepos] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const { isDarkMode } = useTheme()
 
+  
   const searchForUser = useCallback(async () => {
     if (!username.trim()) {
       setErrorMessage('Please enter a GitHub username')
@@ -21,28 +23,14 @@ const Dashboard = () => {
     setErrorMessage('')
 
     try {
-      const user = await fetchGitHubUser(username)
-
-      if (user.message === 'Not Found') {
-        setErrorMessage('User not found')
+      const results = await searchUsers(username)
+      setSearchResults(results.items || [])
+      
+      if (!results.items || results.items.length === 0) {
+        setErrorMessage('No users found')
         setUserData(null)
         setRepos([])
-        setIsLoading(false)
-        return
       }
-
-      if (user.message) {
-        setErrorMessage(user.message)
-        setUserData(null)
-        setRepos([])
-        setIsLoading(false)
-        return
-      }
-
-      const reposData = await fetchRepos(username)
-
-      setUserData(user)
-      setRepos(Array.isArray(reposData) ? reposData : [])
     } catch (error) {
       console.error('Error:', error)
       setErrorMessage('Something went wrong. Please try again.')
@@ -51,8 +39,27 @@ const Dashboard = () => {
     setIsLoading(false)
   }, [username])
 
+  const selectUser = async (userLogin) => {
+    setIsLoading(true)
+    setErrorMessage('')
+    setSearchResults([]) // Clear search results after selection
+
+    try {
+      const user = await fetchGitHubUser(userLogin)
+      const reposData = await fetchRepos(userLogin)
+
+      setUserData(user)
+      setRepos(Array.isArray(reposData) ? reposData : [])
+    } catch (error) {
+      console.error('Error:', error)
+      setErrorMessage('Failed to fetch user details.')
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (!username.trim()) {
+      setSearchResults([])
       setUserData(null)
       setRepos([])
       setErrorMessage('')
@@ -93,6 +100,24 @@ const Dashboard = () => {
 
         {isLoading && <p className="loading">Loading...</p>}
         {errorMessage && <p className="error">{errorMessage}</p>}
+
+        {searchResults.length > 0 && (
+          <div className="search-results">
+            <h3>Search Results</h3>
+            <div className="users-list">
+              {searchResults.map((user) => (
+                <div 
+                  key={user.id} 
+                  className="user-item" 
+                  onClick={() => selectUser(user.login)}
+                >
+                  <img src={user.avatar_url} alt={user.login} className="avatar" />
+                  <span>{user.login}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {userData && (
           <div className="user-profile">
